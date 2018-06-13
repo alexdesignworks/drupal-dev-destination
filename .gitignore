@@ -1,31 +1,31 @@
-# To ignore OS temporary files use global .gitignore
-# https://help.github.com/articles/ignoring-files/#create-a-global-gitignore
-
-# Ignore Drupal docroot, but preserve custom modules, themes and settings.
-docroot/*
-!docroot/sites/
-docroot/sites/*
-!docroot/modules/
-docroot/modules/*
-!docroot/modules/custom/
-!docroot/themes/
-docroot/themes/*
-!docroot/themes/custom/
-!docroot/profiles/
-docroot/profiles/*
-!docroot/profiles/custom/
-!docroot/sites/default/
-docroot/sites/default/*
-!docroot/sites/default/settings.php
-!docroot/sites/default/default.settings.local.php
-!docroot/sites/default/services.yml
-!docroot/sites/default/default.services.local.yml
-
-# Ignore dependencies cache files
-vendor
+# Replaces standard gitignore when artefact is built.
+*.jar
+*.out
+*.log
 node_modules
-
-# Assets.
-docroot/themes/**/build
 screenshots
 .data
+.circleci/config.yml
+.sass-cache
+*.css.map
+docker-compose*
+Dockerfile.*
+.env
+docker/*
+phpcs.xml
+phpunit.xml
+composer.json
+composer.lock
+package.json
+package-lock.json
+Gruntfile.js
+.sass-lint.yml
+.dockerignore
+.eslintrc.json
+behat.yml
+.gitignore.artefact
+/tests
+/scripts
+/TODO.txt
+settings.generated.php
+dependencies.yml
