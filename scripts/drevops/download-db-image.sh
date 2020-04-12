@@ -10,11 +10,6 @@ set -e
 # <org>/<repository>.
 DOCKER_IMAGE="${1:-}"
 
-# Image tag to apply to the newly created image as a first argument to the
-# script. Defaults to "latest".
-# Note that creating a custom tag and "latest" requires running this script twice.
-DOCKER_IMAGE_TAG="${2:-latest}"
-
 # The username of the docker registry to download the database from.
 DOCKER_REGISTRY_USERNAME="${DOCKER_USERNAME:-}"
 # The token of the docker registry to download the database from.
@@ -37,7 +32,7 @@ else
   echo "==> Skipping login into registry as either DOCKER_REGISTRY_USERNAME or DOCKER_REGISTRY_TOKEN was not provided."
 fi
 
-new_image="${DOCKER_REGISTRY}/${DOCKER_IMAGE}:${DOCKER_IMAGE_TAG}"
+new_image="${DOCKER_REGISTRY}/${DOCKER_IMAGE}"
 
 docker pull "${new_image}"
 
