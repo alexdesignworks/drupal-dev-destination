@@ -142,12 +142,11 @@ load _helper_drevops_workflow
 
   assert_ahoy_build
 
-  step "Check that DB loaded from cached image"
-
   # Remove any previously downloaded DB dumps.
   rm -Rf .data/db.tar
   assert_file_not_exists .data/db.tar
 
+  substep "Update DB content"
   # Make a change to current site, export the DB image, remove existing DB image
   # and rebuild the stack - the used image should have the expected changes.
   #
@@ -158,21 +157,22 @@ load _helper_drevops_workflow
   ahoy drush vset site_frontpage user
   assert_page_not_contains "/" "First test node"
   assert_page_contains "/" "Username"
-  # Export DB image.
+
+  substep "Exporting DB image"
   ahoy export-db "db.tar"
   assert_file_exists .data/db.tar
 
-  # Remove existing image and assert that exported image still exists.
+  substep "ERemove existing image and assert that exported image still exists."
   ahoy clean
-  docker image ls | grep -q "${DATABASE_IMAGE}"
+  docker image ls | grep -q "${DATABASE_IMAGE}" || true
   docker image rm "${DATABASE_IMAGE}"
   docker image ls | grep -q -v "${DATABASE_IMAGE}"
   assert_file_exists .data/db.tar
 
-  # Run build.
+  substep "Re-run build to use  DB image"
   assert_ahoy_build
 
-  # Assert that the contents of the DB was loaded from the
+  substep "Assert that the contents of the DB was loaded from the archive"
   assert_page_not_contains "/" "First test node"
   assert_page_contains "/" "Username"
 }
