@@ -29,7 +29,7 @@ load _helper_drevops_workflow
   assert_file_not_exists .data/db.sql
 
   # Remove any existing images to download the fresh one.
-  docker image rm "${DATABASE_IMAGE}"
+  docker image rm "${DATABASE_IMAGE}" || true
   docker image ls | grep -q -v "${DATABASE_IMAGE}"
 
   prepare_sut "Starting download from image, storage in docker image WORKFLOW tests for Drupal ${DRUPAL_VERSION} in build directory ${BUILD_DIR}"
@@ -95,7 +95,7 @@ load _helper_drevops_workflow
   rm -f .data/db.sql
   assert_file_not_exists .data/db.sql
   # Remove any existing images to download the fresh one.
-  docker image rm "${DATABASE_IMAGE}"
+  docker image rm "${DATABASE_IMAGE}" || true
   docker image ls | grep -q -v "${DATABASE_IMAGE}"
 
   prepare_sut "Starting download from image, storage in docker image WORKFLOW tests for Drupal ${DRUPAL_VERSION} in build directory ${BUILD_DIR}"
@@ -130,7 +130,7 @@ load _helper_drevops_workflow
 
   substep "ERemove existing image and assert that exported image still exists."
   ahoy clean
-  docker image rm "${DATABASE_IMAGE}"
+  docker image rm "${DATABASE_IMAGE}" || true
   docker image ls | grep -q -v "${DATABASE_IMAGE}"
   assert_file_exists .data/db.tar
 
