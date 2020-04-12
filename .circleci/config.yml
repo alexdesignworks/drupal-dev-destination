@@ -156,7 +156,6 @@ jobs:
   database: &job_database
     <<: *container_config
     steps:
-      - run: printenv
       - attach_workspace:
           at: /workspace
       - checkout
@@ -201,7 +200,6 @@ jobs:
     <<: *container_config
     parallelism: 2
     steps:
-      - run: printenv
       - attach_workspace:
           at: /workspace
       - checkout
