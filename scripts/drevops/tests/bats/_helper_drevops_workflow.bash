@@ -541,3 +541,15 @@ assert_ahoy_reset(){
 
   remove_development_settings
 }
+
+assert_page_content(){
+  path="${1}"
+  content="${2}"
+  t=$(mktemp)
+  ahoy cli curl -s "http://nginx:8080${path}" > "${t}"
+  assert_file_contains "${t}" "${content}"
+}
+
+assert_db_reload(){
+
+}
