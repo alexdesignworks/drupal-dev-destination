@@ -164,7 +164,6 @@ load _helper_drevops_workflow
 
   substep "ERemove existing image and assert that exported image still exists."
   ahoy clean
-  docker image ls | grep -q "${DATABASE_IMAGE}" || true
   docker image rm "${DATABASE_IMAGE}"
   docker image ls | grep -q -v "${DATABASE_IMAGE}"
   assert_file_exists .data/db.tar
