@@ -229,11 +229,12 @@ assert_ahoy_login(){
 
 assert_ahoy_export_db(){
   step "Export DB"
-  run ahoy export-db "mydb.sql"
+  file="${1:-mydb.sql}"
+  run ahoy export-db "${file}"
   assert_success
   assert_output_not_contains "Containers are not running."
   sync_to_host
-  assert_file_exists ".data/mydb.sql"
+  assert_file_exists ".data/${file}"
 }
 
 assert_ahoy_lint(){
@@ -559,6 +560,8 @@ assert_page_not_contains(){
 }
 
 assert_reload_db(){
+  step "Reload DB image"
+
   # Assert that used DB image has content.
   assert_page_contains "/" "First test node"
 
