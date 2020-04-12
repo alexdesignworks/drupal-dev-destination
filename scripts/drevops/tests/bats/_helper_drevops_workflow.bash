@@ -542,7 +542,7 @@ assert_ahoy_reset(){
   remove_development_settings
 }
 
-assert_page_content(){
+assert_page_contains(){
   path="${1}"
   content="${2}"
   t=$(mktemp)
@@ -550,6 +550,22 @@ assert_page_content(){
   assert_file_contains "${t}" "${content}"
 }
 
-assert_db_reload(){
+assert_page_not_contains(){
+  path="${1}"
+  content="${2}"
+  t=$(mktemp)
+  ahoy cli curl -s "http://nginx:8080${path}" > "${t}"
+  assert_file_not_contains "${t}" "${content}"
+}
 
+assert_reload_db(){
+  # Assert that used DB image has content.
+  assert_page_contains "/" "First test node"
+
+  # Change homepage content and assert that the change was applied.
+  ahoy drush vset site_frontpage user
+  assert_page_not_contains "/" "First test node"
+
+  ahoy reload-db
+  assert_page_contains "/" "First test node"
 }

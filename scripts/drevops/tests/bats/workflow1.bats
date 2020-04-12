@@ -79,11 +79,8 @@ load _helper_drevops_workflow
 
   assert_ahoy_build
 
-  # Assert that used DB image has content.
-  assert_page_content "/" "First test node"
-
   # Assert that DB reload would revert the content.
-  assert_db_reload
+  assert_reload_db
 
   # Other stack asserts.
   assert_gitignore
