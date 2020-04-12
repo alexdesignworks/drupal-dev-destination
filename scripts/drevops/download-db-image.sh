@@ -30,11 +30,11 @@ echo "==> Start Docker data image download."
 
 if docker system info | grep -q "${DOCKER_REGISTRY}"; then
   echo "==> Already logged in to registry \"${DOCKER_REGISTRY}\"."
-else
+elif [ -n "${DOCKER_REGISTRY_USERNAME}" ] &&  [ -n "${DOCKER_REGISTRY_TOKEN}" ]; then
   echo "==> Logging in to registry \"${DOCKER_REGISTRY}\"."
-  [ -z "${DOCKER_REGISTRY_USERNAME}" ] && echo "ERROR: DOCKER_REGISTRY_USERNAME is empty." && exit 1
-  [ -z "${DOCKER_REGISTRY_TOKEN}" ] && echo "ERROR: DOCKER_REGISTRY_TOKEN is empty." && exit 1
   docker login --username "${DOCKER_REGISTRY_USERNAME}" --password "${DOCKER_REGISTRY_TOKEN}" "${DOCKER_REGISTRY}"
+else
+  echo "==> Skipping login into registry as either DOCKER_REGISTRY_USERNAME or DOCKER_REGISTRY_TOKEN was not provided."
 fi
 
 new_image="${DOCKER_REGISTRY}/${DOCKER_IMAGE}:${DOCKER_IMAGE_TAG}"
